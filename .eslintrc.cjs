@@ -23,5 +23,6 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "prefer-const": "warn",
     "tailwindcss/no-custom-classname": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
   },
 };

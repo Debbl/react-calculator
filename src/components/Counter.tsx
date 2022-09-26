@@ -23,14 +23,23 @@ const keys: Key[] = [
   ".",
   "=",
 ];
+const keyOp = ["+", "-", "*", "/", "%", "+/-", "C", "=", "."];
 
-function getClass(k: string) {
-  switch (k) {
-    case "0":
-      return "box-content w-32 px-1";
-    default:
-      return "w-16";
-  }
+function getClass(k: Key) {
+  if (k === "0") return "box-content w-32 px-1";
+  if (keyOp.includes(k)) return "w-16 text-yellow-400";
+  return "w-16";
+  // switch (k) {
+  //   case "0":
+  //     return "box-content w-32 px-1";
+  //   case "C":
+  //   case "+/-":
+  //   case "%":
+  //   case "/":
+  //   case "*":
+  //   default:
+  //     return "w-16";
+  // }
 }
 
 function Counter() {

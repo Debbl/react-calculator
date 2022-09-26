@@ -50,7 +50,7 @@ class Calculator extends EventBus<Events> {
       } else if (stack.length === 2) {
         this.setStack([stack[0], k]);
       } else if (stack.length === 3) {
-        const [str, num] = reduce(stack);
+        const [str] = reduce(stack);
         this.setStack([str, k]);
       }
     } else if (isOpUnary(k)) {
@@ -95,7 +95,7 @@ class Calculator extends EventBus<Events> {
           break;
         case "=":
           if (this.stack.length === 3) {
-            const [str, num] = reduce(this.stack);
+            const [str] = reduce(this.stack);
             this.setStack([str]);
           }
           break;

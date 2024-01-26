@@ -1,12 +1,7 @@
-import type { IFuncUpdater } from "ahooks/lib/createUseStorageState";
-
 import { useEffect } from "react";
 import { useLocalStorageState } from "ahooks";
 
-function useDark(): [
-  boolean,
-  (value: boolean | IFuncUpdater<boolean>) => void,
-] {
+function useDark() {
   const [isDark, setIsDark] = useLocalStorageState("dark", {
     defaultValue: false,
   });
@@ -20,7 +15,7 @@ function useDark(): [
     }
   }, [isDark]);
 
-  return [isDark, setIsDark];
+  return [isDark, setIsDark] as const;
 }
 
 export default useDark;

@@ -1,6 +1,6 @@
+import { useEffect, useRef, useState } from "react";
 import type { Key } from "@/utils/Calculator";
 import Calculator from "@/utils/Calculator";
-import { useEffect, useRef, useState } from "react";
 
 const keys: Key[] = [
   "C",
@@ -46,9 +46,11 @@ function Counter() {
   const [value, setValue] = useState("0");
 
   const { current: calculator } = useRef(new Calculator());
+
   useEffect(() => {
     return calculator.on("change", setValue);
-  }, []);
+  }, [calculator]);
+
   return (
     <div className="inline-block rounded-md border p-3 pt-10">
       <div className="p-3 text-right text-6xl">{value}</div>
@@ -56,10 +58,9 @@ function Counter() {
         {keys.map((k) => (
           <button
             onClick={() => calculator.press(k)}
-            className={
-              "box-border text-2xl bg-gray-100/50 h-16 rounded-md border hover:bg-yellow-400/60 active:bg-yellow-400/90 transition-all ease-in " +
-              getClass(k)
-            }
+            className={`box-border h-16 rounded-md border bg-gray-100/50 text-2xl transition-all ease-in hover:bg-yellow-400/60 active:bg-yellow-400/90 ${getClass(
+              k,
+            )}`}
             key={k}
           >
             {k}

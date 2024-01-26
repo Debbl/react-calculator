@@ -1,7 +1,10 @@
 import EventBus from "./EventBus";
-import { reduce, Stack } from "./Stack";
+import type { Stack } from "./Stack";
+import { reduce } from "./Stack";
 
-type Events = { change: string };
+interface Events {
+  change: string;
+}
 
 type KeyNumber = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 type KeyOpBinary = "+" | "-" | "*" | "/";
@@ -9,7 +12,8 @@ type KeyOpUnary = "%" | "+/-";
 export type Key = KeyNumber | KeyOpBinary | KeyOpUnary | "." | "C" | "=";
 
 // k is KeyNumber 用于 if 后类型缩小
-export const isNumber = (k: Key): k is KeyNumber => !isNaN(parseInt(k));
+export const isNumber = (k: Key): k is KeyNumber =>
+  !Number.isNaN(Number.parseInt(k));
 export const isOpBinary = (k: Key): k is KeyOpBinary =>
   ["+", "-", "*", "/"].includes(k);
 export const isOpUnary = (k: Key): k is KeyOpUnary => ["%", "+/-"].includes(k);
@@ -19,7 +23,7 @@ class Calculator extends EventBus<Events> {
 
   protected setStack(stack: Stack) {
     this.stack = stack;
-    console.log(stack);
+    // console.log(stack);
     this.emit("change", stack.join(""));
     // if (stack.length === 1) {
     //   this.emit("change", this.stack[0]);
@@ -31,10 +35,13 @@ class Calculator extends EventBus<Events> {
     //   throw stack;
     // }
   }
+
   press(k: Key) {
     const { stack } = this;
+
     if (isNumber(k)) {
-      const num = parseInt(k);
+      const num = Number.parseInt(k);
+
       if (stack.length === 1) {
         this.setStack([
           stack[0] === "0" ? num.toString() : stack[0] + num.toString(),
@@ -56,12 +63,14 @@ class Calculator extends EventBus<Events> {
     } else if (isOpUnary(k)) {
       const operate = (v: string, k: KeyOpUnary): string => {
         if (k === "%") {
-          return parseFloat((parseFloat(v) / 100).toFixed(8)).toString();
+          return Number.parseFloat(
+            (Number.parseFloat(v) / 100).toFixed(8),
+          ).toString();
         } else if (k === "+/-") {
           if (v.startsWith("-")) {
             return v.substring(1);
           } else {
-            return "-" + v;
+            return `-${v}`;
           }
         } else {
           throw k;
@@ -79,7 +88,7 @@ class Calculator extends EventBus<Events> {
         ]);
       }
     } else {
-      const op = (k: string) => (k.includes(".") ? k : k + ".");
+      const op = (k: string) => (k.includes(".") ? k : `${k}.`);
       switch (k) {
         case ".":
           if (stack.length === 1) {

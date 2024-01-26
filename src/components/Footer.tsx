@@ -3,6 +3,7 @@ import useDark from "@/hooks/useDark";
 
 function Footer() {
   const [isDark, setIsDark] = useDark();
+
   return (
     <div className="flex items-center justify-center gap-x-2 py-3 text-xl">
       <button className="flex items-center" onClick={() => setIsDark(!isDark)}>

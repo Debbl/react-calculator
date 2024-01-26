@@ -10,6 +10,7 @@ function useDark(): [
   const [isDark, setIsDark] = useLocalStorageState("dark", {
     defaultValue: false,
   });
+
   useEffect(() => {
     const htmlEl = document.querySelector("html");
     if (isDark) {
@@ -18,6 +19,7 @@ function useDark(): [
       htmlEl?.classList.remove("dark");
     }
   }, [isDark]);
+
   return [isDark, setIsDark];
 }
 

@@ -1,5 +1,5 @@
-import Footer from "@/components/Footer";
 import Counter from "./components/Counter";
+import Footer from "@/components/Footer";
 
 function App() {
   return (
